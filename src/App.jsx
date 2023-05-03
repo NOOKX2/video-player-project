@@ -7,6 +7,8 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState("");
   const [duration, setDuration] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("")
 
   const onPlayVideo = () => {
     setIsPlaying(true);
@@ -15,13 +17,22 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("[App.jsx] useEffect");
+    console.log("Time")
+    if(time > 15) {
+      setIsDisabled(true)
+      setErrorMsg("Cannot more than 15")
+    } else {
+      setErrorMsg("")
+      setIsDisabled(false);
+    }
+  }, [time])
+
+  useEffect(() => {
+    console.log("Duration")
     const timerId = setTimeout(() => {
-      console.log("[App.jsx] setTimeout: ", duration);
       setIsPlaying(false);
     }, duration * 1000);
     return () => {
-      console.log("[App.jsx] cleanup function");
       clearTimeout(timerId);
     };
   }, [duration]);
@@ -33,7 +44,8 @@ function App() {
         value={time}
         onChange={(e) => setTime(e.target.value)}
       />
-      <button onClick={onPlayVideo}>{isPlaying ? "Pause" : "Play"}</button>
+      <button disabled={isDisabled} onClick={onPlayVideo}>{isPlaying ? "Pause" : "Play"}</button>
+      {errorMsg && <div style={{color: "red"}}>{errorMsg}</div>}
       <VideoPlayer isPlaying={isPlaying} src={VideoFile} />
     </>
   );
