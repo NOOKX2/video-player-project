@@ -4,7 +4,7 @@ import VideoPlayer from "./components/VideoPlayer";
 import VideoFile from "./assets/1-min-video.mp4"
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState("");
 
   return (
