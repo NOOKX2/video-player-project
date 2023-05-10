@@ -1,26 +1,22 @@
 import { useState } from "react";
 import "./App.css";
-import VideoPlayer from "./components/VideoPlayer";
-import VideoFile from "./assets/1-min-video.mp4"
+import { StockGraph } from "./components/StockGraph/StockGraph";
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [time, setTime] = useState("");
+  const [isShow, setIsShow] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   return (
     <>
       <input
-        type="number"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
       />
-      <button onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? "Pause" : "Play"}
+      <br />
+      <button onClick={() => setIsShow(!isShow)}>
+        {isShow ? "Hide" : "Show"}
       </button>
-      <VideoPlayer
-        isPlaying={isPlaying}
-        src={VideoFile}
-      />
+      {isShow && <StockGraph />}
     </>
   );
 }
